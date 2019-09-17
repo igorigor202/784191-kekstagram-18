@@ -1,4 +1,4 @@
-# Личный проект «Кекстаграм» [![Build status][travis-image]][travis-url]
+﻿# Личный проект «Кекстаграм» [![Build status][travis-image]][travis-url]
 
 * Студент: [Игорь Нагибин](https://up.htmlacademy.ru/javascript/18/user/784191).
 * Наставник: Роман Макаров.

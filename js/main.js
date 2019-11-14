@@ -31,10 +31,11 @@ var NAMES = [
   'Владимир'
 ];
 var MOCKS_COUNT = 25;
-var MAX_COMMENTS = 3;
 var MAX_LIKES = 201;
 var MIN_LIKES = 15;
+var MAX_COMMENTS = 3;
 var MIN_COMMENTS = 1;
+var AVATAR_COUNT = 6;
 
 var getRandomNumber = function (min, max) {
   return Math.floor(Math.random() * (max + 1 - min) + min);
@@ -46,7 +47,7 @@ var getRandomElement = function (arr) {
 };
 
 var generateAvatarUrl = function () {
-  return 'img/avatar-' + getRandomNumber(1, MOCKS_COUNT) + '.svg';
+  return 'img/avatar-' + getRandomNumber(1, AVATAR_COUNT) + '.svg';
 };
 
 var generateComment = function () {
@@ -73,6 +74,7 @@ var generateMock = function (int) {
     description: getRandomElement(DESCRIPTIONS),
     likes: getRandomNumber(MIN_LIKES, MAX_LIKES),
     comments: generateCommentsList(randomCommentCount),
+    сommentCountdata: getRandomNumber(MIN_COMMENTS, MAX_COMMENTS)
   };
 };
 
@@ -116,3 +118,50 @@ var renderPictures = function (mocksList) {
 };
 
 renderPictures(mocks);
+
+var bigPicture = document.querySelector('.big-picture');
+bigPicture.classList.remove('hidden');
+
+var generateCommentNode = function (commentData, commentNode) {
+  var message = commentNode.querySelector('.social__text');
+  message.textContent = commentData.message;
+  var image = commentNode.querySelector('.social__picture');
+  image.setAttribute('src', commentData.avatar);
+  var alt = commentNode.querySelector('.social__picture');
+  alt.textContent = commentData.name;
+  return commentNode;
+};
+
+var generateBigPictureFromData = function (mock, commentNode) {
+  var image = bigPicture.querySelector('.big-picture__img img');
+  var url = mock.url;
+  image.setAttribute('src', url);
+  var likesCount = mock.likes;
+  var likes = bigPicture.querySelector('.big-picture__social .likes-count');
+  likes.textContent = likesCount;
+  var commentData = mock.сommentCountdata;
+  var commentsCount = bigPicture.querySelector('.comments-count');
+  commentsCount.textContent = commentData;
+  var description = mock.description;
+  var descriptionNode = bigPicture.querySelector('.social__caption');
+  descriptionNode.setAttribute('src', description);
+  var commentsFragment = document.createDocumentFragment();
+  for (var i = 0; i < mock.comments.length; i += 1) {
+    var newCommentNode = commentNode.cloneNode(true);
+    var currentCommentData = mock.comments[i];
+    var someNewCommentNode = generateCommentNode(currentCommentData, newCommentNode);
+    commentsFragment.appendChild(someNewCommentNode);
+  }
+  var commentsList = bigPicture.querySelector('.social__comments');
+  commentsList.innerHTML = '';
+  commentsList.appendChild(commentsFragment);
+
+  var socialComment = document.querySelector('.social__comment-count');
+  socialComment.classList.add('visually-hidden');
+  var commentsLoader = document.querySelector('.comments-loader');
+  commentsLoader.classList.add('visually-hidden');
+};
+
+var commentsList1 = bigPicture.querySelector('.social__comments');
+generateBigPictureFromData(mocks[0], commentsList1);
+

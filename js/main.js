@@ -74,7 +74,7 @@ var generateMock = function (int) {
     description: getRandomElement(DESCRIPTIONS),
     likes: getRandomNumber(MIN_LIKES, MAX_LIKES),
     comments: generateCommentsList(randomCommentCount),
-    сommentCountdata: getRandomNumber(MIN_COMMENTS, MAX_COMMENTS)
+    сommentCount: getRandomNumber(MIN_COMMENTS, MAX_COMMENTS)
   };
 };
 
@@ -139,9 +139,9 @@ var generateBigPictureFromData = function (mock, commentNode) {
   var likesCount = mock.likes;
   var likes = bigPicture.querySelector('.big-picture__social .likes-count');
   likes.textContent = likesCount;
-  var commentData = mock.сommentCountdata;
-  var commentsCount = bigPicture.querySelector('.comments-count');
-  commentsCount.textContent = commentData;
+  var commentData = mock.сommentCount;
+  var commentsCountNode = bigPicture.querySelector('.comments-count');
+  commentsCountNode.textContent = commentData;
   var description = mock.description;
   var descriptionNode = bigPicture.querySelector('.social__caption');
   descriptionNode.setAttribute('src', description);
